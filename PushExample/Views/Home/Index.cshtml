@@ -1,0 +1,71 @@
+﻿@model MessageBase
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Welcome</h1>
+    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+</div>
+
+
+
+<div>
+    <h1>Send message to Android device</h1>
+    <form asp-action="index" method="post" enctype="application/x-www-form-urlencoded">
+        	
+        <div class="validation" asp-validation-summary="All"></div>
+        
+        <input type="hidden" name="type" value="GoogleMessage" />
+
+        <label for="DeviceToken">DeviceToken</label>
+        <input name="DeviceToken" id="DeviceToken" />
+
+        <label for="Message">Message</label>
+        <input name="Message" id="Message" />
+
+        <label for="Title">Title</label>
+        <input name="Title" id="Title" />
+
+        <label for="Condition">Condition</label>
+        <input name="Condition" id="Condition" />
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+<div>
+    <h1>Send message to Apple device</h1>
+    <form asp-action="index" method="post" enctype="application/x-www-form-urlencoded">
+         <div class="validation" asp-validation-summary="All"></div>
+
+        <input type="hidden" name="type" value="AppleMessage" />
+
+        <label for="PushToken">PushToken</label>
+        <input name="PushToken" id="PushToken" />
+
+        <label for="Alert">Alert</label>
+        <input name="Alert" id="Alert" />
+
+        <label for="Priority">Priority</label>
+        <input name="Priority" id="Priority" type="number" />
+
+        <label for="IsBackground">IsBackground</label>
+        <input name="IsBackground" id="IsBackground" type="checkbox" />
+
+        <button type="submit">Отправить</button>
+    </form>
+</div>
+
+@if (Model != null)
+{
+    <h4>Message sent, id is @Model.Id</h4>
+    <form asp-action="GetMessageState" method="post">
+        <input name="id" value="@Model.Id" />
+        <button type="submit">Request state</button>
+    </form>
+}
+
+@if (ViewData["State"] != null)
+{
+    <div>State of message is @ViewData["State"]</div>
+}
